@@ -1,12 +1,25 @@
 "use client";
 
-import Captcha from "@/components/turnstile";
+import { FormEvent, useState } from "react";
+import TurnstileWidget from "@/components/turnstile";
 
 export default function Home() {
+  const [token, setToken] = useState<string | null>(null);
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    if (!token) {
+      alert("Please complete the CAPTCHA");
+      return;
+    }
+    // Here you would typically send the form data along with the token to your server
+    console.log("Form submitted with CAPTCHA token:", token);
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gradient-to-b from-gray-50 to-gray-200 dark:from-neutral-800 dark:to-neutral-900">
       <div className="w-full max-w-sm bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-8">
-        <form action="/results">
+        <form onSubmit={handleSubmit}>
           <label
             htmlFor="vin"
             className="block text-gray-800 dark:text-neutral-200 text-sm font-semibold mb-4"
@@ -29,7 +42,16 @@ export default function Home() {
               Decode
             </button>
           </div>
-          <Captcha />
+          <div className="mt-4">
+            <TurnstileWidget
+              sitekey={process.env.NEXT_PUBLIC_TURNSLITE_SITE_KEY!}
+              onVerify={(t) => setToken(t)}
+              onError={() => {
+                console.error("CAPTCHA verification failed");
+                setToken(null);
+              }}
+            />
+          </div>
         </form>
       </div>
     </main>
