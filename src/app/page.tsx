@@ -1,3 +1,7 @@
+"use client";
+
+import Captcha from "@/components/turnstile";
+
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gradient-to-b from-gray-50 to-gray-200 dark:from-neutral-800 dark:to-neutral-900">
@@ -25,6 +29,7 @@ export default function Home() {
               Decode
             </button>
           </div>
+          <Captcha />
         </form>
       </div>
     </main>
