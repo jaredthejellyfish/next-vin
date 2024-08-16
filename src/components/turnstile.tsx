@@ -66,17 +66,6 @@ export default function Captcha(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (isError) {
-    return (
-      <div className="text-red-500 mt-5" onClick={retry}>
-        Load captcha error
-        <span className="text-blue-500 cursor-pointer inline-block text-sm font-semibold ml-2">
-          Retry
-        </span>
-      </div>
-    );
-  }
-
   return (
     <>
       <div id="captcha-container" className='mt-5 -mb-4'></div>
