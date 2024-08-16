@@ -1,59 +1,41 @@
 'use client';
 
 import Script from 'next/script';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 
-const scriptLink = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+const SCRIPT_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
 
-type TurnstileRenderParameters = Turnstile.RenderParameters;
+type CaptchaProps = Partial<Turnstile.RenderParameters> & {
+  sitekey?: string;
+};
 
-export default function Captcha(
-  props: Pick<
-    TurnstileRenderParameters,
-    'action' | 'cData' | 'callback' | 'tabindex' | 'theme' | 'language'
-  > & {
-    sitekey?: TurnstileRenderParameters['sitekey'];
-    errorCallback?: TurnstileRenderParameters['error-callback'];
-    expiredCallback?: TurnstileRenderParameters['expired-callback'];
-  }
-) {
-  const { sitekey, errorCallback, expiredCallback, ...rest } = props;
-
+export default function Captcha({ sitekey, ...rest }: CaptchaProps) {
   const widgetID = useRef<string>();
   const [isError, setIsError] = useState(false);
 
-  function retry() {
-    setIsError(false);
-  }
-
-  function onError(e?: string | Error) {
+  const handleError = useCallback((e?: string | Error) => {
     console.log(`Captcha error`, e);
     setIsError(true);
-    if (errorCallback) {
-      errorCallback();
-    }
-  }
+    rest['error-callback']?.();
+  }, [rest]);
 
-  function renderWidget() {
+  const renderWidget = useCallback(() => {
     try {
-      widgetID.current = turnstile.render('#captcha-container', {
+      const turnstileConfig = {
         ...rest,
-        // Refer: https://developers.cloudflare.com/turnstile/reference/testing/
         sitekey: sitekey || process.env.NEXT_PUBLIC_TURNSLITE_SITE_KEY || '',
-        'error-callback': onError,
-        'expired-callback': expiredCallback,
-      });
+        'error-callback': handleError,
+      };
+      
+      widgetID.current = turnstile.render('#captcha-container', turnstileConfig);
+      
       if (!widgetID.current) {
-        throw new Error(`turnstile.render return widgetID=${widgetID.current}`);
+        throw new Error(`turnstile.render returned invalid widgetID`);
       }
-    } catch (e: unknown) {
-      onError(e as Error);
+    } catch (e) {
+      handleError(e as Error);
     }
-  }
-
-  function onLoad() {
-    renderWidget();
-  }
+  }, [sitekey, rest, handleError]);
 
   useEffect(() => {
     if (!widgetID.current && (window as any).turnstile) {
@@ -63,16 +45,15 @@ export default function Captcha(
       (window as any).turnstile?.remove(widgetID.current || '');
       widgetID.current = undefined;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [renderWidget]);
 
   return (
     <>
       <div id="captcha-container" className='mt-5 -mb-4'></div>
       <Script
-        src={scriptLink}
-        onLoad={onLoad}
-        onError={(e) => onError('load error: ' + e.message)}
+        src={SCRIPT_SRC}
+        onLoad={renderWidget}
+        onError={(e) => handleError(`Script load error: ${e.message}`)}
       />
     </>
   );
