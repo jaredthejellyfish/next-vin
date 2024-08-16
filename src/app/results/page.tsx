@@ -42,7 +42,7 @@ const tables = [
 const VinLookupTable: React.FC<{ vinData: VinLookupResponse }> = ({
   vinData,
 }) => {
-  if (!vinData?.data) return <p>No data available.</p>;
+  if (!vinData?.data) return <p className="text-center text-gray-500">No data available.</p>;
 
   const allTableIds = tables.flatMap((table) => table.ids);
   const otherResults = vinData.data.filter(
@@ -53,42 +53,41 @@ const VinLookupTable: React.FC<{ vinData: VinLookupResponse }> = ({
     results &&
     results.length > 0 && (
       <div key={title} className="mb-8">
-        <h2 className="text-lg font-bold text-gray-700 dark:text-neutral-200">
+        <h2 className="text-lg font-semibold text-gray-800 dark:text-neutral-100 mb-4">
           {title}
         </h2>
-        <table className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+        <table className="min-w-full bg-white shadow rounded-md overflow-hidden">
           <thead className="bg-gray-50 dark:bg-neutral-700">
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-800 dark:text-neutral-200 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-neutral-200 uppercase tracking-wider"
               >
                 ID
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-800 dark:text-neutral-200 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-neutral-200 uppercase tracking-wider"
               >
                 Variable
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-800 dark:text-neutral-200 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-neutral-200 uppercase tracking-wider"
               >
                 Value
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-200 dark:divide-neutral-800">
             {results.map((result, index) => (
               <tr
                 key={index}
-                className="odd:bg-white even:bg-gray-100 dark:odd:bg-neutral-900 dark:even:bg-neutral-800"
+                className="odd:bg-gray-50 even:bg-white dark:odd:bg-neutral-900 dark:even:bg-neutral-800"
               >
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
                   {result.VariableId}
                 </td>
-
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
                   {result.Variable ?? "N/A"}
                 </td>
@@ -109,7 +108,7 @@ const VinLookupTable: React.FC<{ vinData: VinLookupResponse }> = ({
     );
 
   return (
-    <div>
+    <div className="bg-gray-100 dark:bg-neutral-900 min-h-screen p-8">
       {tables.map((table) =>
         renderTable(
           vinData.data &&
@@ -132,28 +131,29 @@ async function VinResult({ searchParams: { vin } }: Props) {
     [`vin-${vin}`]
   );
 
-  const data = await getCachedVinData(vin);1
+  const data = await getCachedVinData(vin);
 
   if (data.error) {
     return { error: true, carData: null };
   }
 
   return (
-    <main className="flex flex-col px-10">
+    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-neutral-900 p-10">
       {data.error && <p className="text-red-500">Error fetching VIN data</p>}
 
       {data && data.data && (
-        <div className="mt-8">
+        <div className="w-full max-w-4xl mt-8 bg-white dark:bg-neutral-800 shadow-lg rounded-lg p-6">
           {data.imageUrl && (
-            <div className="mt-4 mb-8">
-              <h2 className="text-lg font-bold text-gray-700 dark:text-neutral-200">
-                Car Image:
+            <div className="mb-8 text-center">
+              <h2 className="text-xl font-semibold text-gray-800 dark:text-neutral-100 mb-4">
+                Car Image
               </h2>
               <Image
                 src={data.imageUrl}
                 alt="Car Image"
                 width={400}
                 height={300}
+                className="rounded-md shadow-lg"
               />
             </div>
           )}

@@ -1,27 +1,32 @@
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-100">
-      <form action="/results" className="w-full max-w-sm">
-        <label htmlFor="vin" className="block text-gray-700 text-sm font-bold mb-2">
-          Enter VIN:
-        </label>
-        <div className="bg-white rounded-md px-3 py-1 flex flex-row gap-x-3 shadow-md">
-          <input
-            className="h-10 w-full rounded-md px-3 py-2 text-gray-700 focus:outline-none"
-            type="text"
-            id="vin"
-            name="vin"
-            placeholder="Enter your VIN"
-            required
-          />
-          <button
-            className="h-10 px-4 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none"
-            type="submit"
+    <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gradient-to-b from-gray-50 to-gray-200 dark:from-neutral-800 dark:to-neutral-900">
+      <div className="w-full max-w-sm bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-8">
+        <form action="/results">
+          <label
+            htmlFor="vin"
+            className="block text-gray-800 dark:text-neutral-200 text-sm font-semibold mb-4"
           >
-            Decode
-          </button>
-        </div>
-      </form>
+            Enter VIN:
+          </label>
+          <div className="bg-gray-50 dark:bg-neutral-700 rounded-md px-4 py-2 flex items-center gap-x-3 shadow-inner">
+            <input
+              className="h-10 w-full rounded-md bg-transparent text-gray-700 dark:text-neutral-200 placeholder-gray-500 dark:placeholder-neutral-400 focus:outline-none"
+              type="text"
+              id="vin"
+              name="vin"
+              placeholder="Enter your VIN"
+              required
+            />
+            <button
+              className="h-10 px-4 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none"
+              type="submit"
+            >
+              Decode
+            </button>
+          </div>
+        </form>
+      </div>
     </main>
   );
 }
