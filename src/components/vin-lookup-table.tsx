@@ -80,7 +80,7 @@ const VinLookupTable = ({ vinData }: { vinData: VinLookupResponse }) => {
           )}
         </button>
         {expandedTables.includes(title) && (
-          <div className="dark:bg-neutral-900 shadow-md rounded-b-lg overflow-hidden">
+          <div className="dark:bg-neutral-900 shadow-md rounded-b-lg overflow-y-hidden overflow-x-scroll">
             <table className="min-w-full">
               <thead className="bg-gray-50 dark:bg-neutral-800 border-t-neutral-700 border-t">
                 <tr>
