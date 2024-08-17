@@ -5,8 +5,9 @@ const error = () => {
   return {
     error: true,
     data: null,
-    imageUrl: null,
-  } as VinLookupResponse;
+    make: null,
+    model: null,
+  };
 };
 
 export default async function getVinData(
@@ -43,18 +44,12 @@ export default async function getVinData(
       (item) => item.Variable === "Model"
     )?.Value;
 
-    const res = await fetch(
-      `https://www.carimagery.com/api.asmx/GetImageUrl?searchTerm=${make}+${model}`
-    );
-    const data = await res.text();
-    const match = data.match(/<string[^>]*>([^<]*)<\/string>/);
-    const imageUrl = match ? match[1].replace("http://", "https://") : null;
-
     return {
       error: false,
       data: [...filteredResults],
-      imageUrl,
-    } as VinLookupResponse;
+      make: make || null,
+      model: model || null,
+    };
   } catch (e) {
     console.error("Error fetching VIN data:", (e as Error).message);
     return error();

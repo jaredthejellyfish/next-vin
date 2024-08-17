@@ -15,7 +15,8 @@ type VehicleResponse = {
 type VinLookupResponse = {
   error: boolean
   data: VehicleResponse["Results"] | null
-  imageUrl: string | null
+  make: string | null
+  model: string | null
 }
 
 export type { Result, VehicleResponse, VinLookupResponse };

@@ -4,6 +4,8 @@ import { VinLookupResponse } from "@/types";
 import getVinData from "@/utils/getVinData";
 import { cn } from "@/utils/cn";
 import { unstable_cache } from "next/cache";
+import verifyToken from "@/utils/verifyToken";
+import getCarImage from "@/utils/getCarImage";
 
 const tables = [
   { name: "Vehicle Identity", ids: [142, 26, 28, 29, 34, 38, 110, 196] },
@@ -38,21 +40,6 @@ const tables = [
   },
   { name: "Lighting Visibility", ids: [177, 178, 179, 180, 19, 20] },
 ];
-
-async function verifyToken(token: string) {
-  const form = new FormData();
-  form.append("secret", process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY ?? "");
-  form.append("response", token);
-
-  const result = await fetch(
-    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-    { method: "POST", body: form }
-  );
-
-  const outcome = await result.json();
-
-  return outcome.success;
-}
 
 const VinLookupTable: React.FC<{ vinData: VinLookupResponse }> = ({
   vinData,
@@ -151,13 +138,14 @@ async function VinResult({ searchParams: { vin, token } }: Props) {
       </main>
     );
   }
-  
+
   const getCachedVinData = unstable_cache(
     async (vin) => getVinData(vin),
     [`vin-${vin}`]
   );
 
   const data = await getCachedVinData(vin);
+  const imageUrl = await getCarImage(data.make, data.model);
 
   if (data.error) {
     return { error: true, carData: null };
@@ -169,13 +157,13 @@ async function VinResult({ searchParams: { vin, token } }: Props) {
 
       {data && data.data && (
         <div className="w-full max-w-4xl mt-8 bg-white dark:bg-neutral-800 shadow-lg rounded-lg p-6">
-          {data.imageUrl && (
+          {imageUrl && (
             <div className="mb-8 text-center">
               <h2 className="text-xl font-semibold text-gray-800 dark:text-neutral-100 mb-4">
                 Car Image
               </h2>
               <Image
-                src={data.imageUrl}
+                src={imageUrl}
                 alt="Car Image"
                 width={400}
                 height={300}
