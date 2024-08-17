@@ -14,7 +14,9 @@ export default function Home() {
       alert("Please complete the CAPTCHA");
       return;
     }
-    router.push(`/results?vin=${(event.target as any).vin.value}&token=${token ?? ""}`);
+    router.push(
+      `/results?vin=${(event.target as any).vin.value}&token=${token ?? ""}`
+    );
   };
 
   return (
@@ -53,7 +55,6 @@ export default function Home() {
               }}
             />
           </div>
-          {token}
         </form>
       </div>
     </main>
