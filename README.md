@@ -1,6 +1,4 @@
-# VIN-Decode.com
-
-![VIN-Decode](https://www.regcheck.org.uk/image.aspx/@S0lBIFNwb3J0YWdl)
+# vin-decode.com
 
 Welcome to the official GitHub repository for [VIN-Decode.com](https://vin-decode.com), a powerful and user-friendly platform for decoding Vehicle Identification Numbers (VINs). Our service provides detailed information about vehicles based on their VIN, including manufacturer details, physical characteristics, engine specs, safety features, and more.
 
@@ -103,6 +101,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 If you have any questions or need further assistance, feel free to reach out:
 
 - Email: ger.almenara@gmail.com
-- Website: [VIN-Decode.com](https://vin-decode.com)
+- Website: [vin-decode.com](https://vin-decode.com)
 
 ---
