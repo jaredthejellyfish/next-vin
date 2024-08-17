@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import TurnstileWidget from "@/components/turnstile";
 import { useRouter } from "next/navigation";
-import { validate, validateAndThrowOnInvalid } from "vinidator";
+import { validate } from "vinidator";
 
 export default function Home() {
   const [token, setToken] = useState<string | null>(null);
