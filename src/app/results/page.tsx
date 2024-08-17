@@ -12,6 +12,12 @@ import { redirect } from "next/navigation";
 
 type Props = { searchParams: { vin: string; token: string } };
 
+export async function generateMetadata({ searchParams: { vin, token } }: Props) {
+  return {
+    title: `Vin Decoder - ${vin}`,
+  }
+}
+
 async function VinResult({ searchParams: { vin, token } }: Props) {
   const isValidToken = await verifyToken(token);
   const bypassToken = process.env.NEXT_PUBLIC_BYPASS_TOKEN === "true";
