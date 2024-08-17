@@ -72,7 +72,7 @@ const ServicesPage = () => {
             seconds.
           </li>
           <li>
-            Vehicle History Reports: Learn about a vehicle's past, including
+            Vehicle History Reports: Learn about a vehicle&apos;s past, including
             accidents and ownership history.
           </li>
           <li>
