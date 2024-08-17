@@ -2,18 +2,19 @@
 
 import { FormEvent, useState } from "react";
 import TurnstileWidget from "@/components/turnstile";
+import { redirect, useRouter } from "next/navigation";
 
 export default function Home() {
   const [token, setToken] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (!token) {
-      alert("Please complete the CAPTCHA");
-      return;
-    }
-    // Here you would typically send the form data along with the token to your server
-    console.log("Form submitted with CAPTCHA token:", token);
+    // if (!token) {
+    //   alert("Please complete the CAPTCHA");
+    //   return;
+    // }
+    router.push(`/api/verify?vin=${(event.target as any).vin.value}?token=${token ?? ""}`);
   };
 
   return (
