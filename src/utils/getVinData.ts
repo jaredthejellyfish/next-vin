@@ -7,6 +7,7 @@ const error = () => {
     data: null,
     make: null,
     model: null,
+    year: null,
   };
 };
 
@@ -43,12 +44,16 @@ export default async function getVinData(
     const model = filteredResults.find(
       (item) => item.Variable === "Model"
     )?.Value;
+    const year = filteredResults.find(
+      (item) => item.Variable === "Model Year"
+    )?.Value;
 
     return {
       error: false,
       data: [...filteredResults],
       make: make || null,
       model: model || null,
+      year: year || null,
     };
   } catch (e) {
     console.error("Error fetching VIN data:", (e as Error).message);

@@ -17,6 +17,7 @@ type VinLookupResponse = {
   data: VehicleResponse["Results"] | null
   make: string | null
   model: string | null
+  year: string | null
 }
 
 export type { Result, VehicleResponse, VinLookupResponse };

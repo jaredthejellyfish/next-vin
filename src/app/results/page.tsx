@@ -16,7 +16,7 @@ async function VinResult({ searchParams: { vin, token } }: Props) {
   const isValidToken = await verifyToken(token);
   const bypassToken = process.env.NEXT_PUBLIC_BYPASS_TOKEN === "true";
 
-  if (!bypassToken &&!isValidToken) {
+  if (!bypassToken && !isValidToken) {
     return redirect("/");
   }
 
@@ -26,7 +26,10 @@ async function VinResult({ searchParams: { vin, token } }: Props) {
   );
 
   const data = await getCachedVinData(vin);
-  const imageUrl = await getCarImage(data.make, data.model);
+  const imageUrl = getCarImage(
+    { make: data.make ?? "", model: data.model ?? "", year: data.year ?? "" },
+    "0"
+  );
 
   if (data.error) {
     return { error: true, carData: null };
@@ -57,7 +60,7 @@ async function VinResult({ searchParams: { vin, token } }: Props) {
                 src={imageUrl}
                 alt="Vehicle Image"
                 layout="fill"
-                objectFit="cover"
+                objectFit="contain"
                 className="transition-opacity duration-300 hover:opacity-90"
               />
             </div>

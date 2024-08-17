@@ -1,16 +1,18 @@
-export default async function getCarImage(
-  make: string | null,
-  model: string | null
+export default function getCarImage(
+  car: { make: string; year: string; model: string },
+  angle?: string
 ) {
-  if (!make || !model) {
-    return null;
-  }
-  const res = await fetch(
-    `https://www.carimagery.com/api.asmx/GetImageUrl?searchTerm=${make}+${model}`
-  );
-  const data = await res.text();
-  const match = data.match(/<string[^>]*>([^<]*)<\/string>/);
-  const imageUrl = match ? match[1].replace("http://", "https://") : null;
+  const url = new URL("https://cdn.imagin.studio/getimage");
 
-  return imageUrl;
+  const { make, year, model } = car;
+
+  url.searchParams.append("customer", "img");
+  url.searchParams.append("zoomType", "fullscreen");
+  url.searchParams.append("paintdescription", "radiant-green");
+  url.searchParams.append("modelFamily", model);
+  url.searchParams.append("make", make);
+  url.searchParams.append("modelYear", `${year}`);
+  url.searchParams.append("angle", `${angle}`);
+
+  return `${url}`;
 }

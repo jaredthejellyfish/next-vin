@@ -4,7 +4,7 @@ const nextConfig = {
         remotePatterns: [
           {
             protocol: 'https',
-            hostname: 'www.regcheck.org.uk',
+            hostname: 'cdn.imagin.studio',
           },
         ],
       },
