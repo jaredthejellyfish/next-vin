@@ -4,16 +4,31 @@ import { FormEvent, useState } from "react";
 import TurnstileWidget from "@/components/turnstile";
 import { useRouter } from "next/navigation";
 import { validate } from "vinidator";
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 export default function Home() {
   const [token, setToken] = useState<string | null>(null);
   const [vin, setVin] = useState("");
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (!token) {
-      alert("Please complete the CAPTCHA");
+      toast({
+        title: "CAPTCHA verification failed",
+        description: "Please ensure you are not a robot",
+        variant: "destructive",
+        action: (
+          <ToastAction
+            altText="Try again"
+            onClick={() => window.location.reload()}
+          >
+            Try again
+          </ToastAction>
+        ),
+      });
       return;
     }
     router.push(
@@ -22,7 +37,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex h-screen-bar flex-col items-center justify-center p-6 dark:bg-black">
+    <main className="flex h-screen-bar flex-col items-center justify-center p-6 dark:bg-neutral-900">
       <div className="w-full max-w-sm bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-8">
         <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
           VIN Decoder
@@ -57,7 +72,7 @@ export default function Home() {
                 className="h-10 px-4 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-neutral-800 disabled:opacity-50"
                 type="submit"
                 aria-label="Decode VIN"
-                disabled={!token || validate(vin).isValid === false}
+                disabled={validate(vin).isValid === false}
               >
                 Decode
               </button>
@@ -68,7 +83,6 @@ export default function Home() {
               sitekey={process.env.NEXT_PUBLIC_TURNSLITE_SITE_KEY!}
               onVerify={(t) => setToken(t)}
               onError={() => {
-                console.error("CAPTCHA verification failed");
                 setToken(null);
               }}
             />

@@ -1,7 +1,6 @@
-"use client"
+"use client";
 
-import React, { FormEvent } from 'react';
-import { Mail, Phone, MessageSquare } from 'lucide-react';
+import React, { FormEvent } from "react";
 
 const ContactPage = () => {
   // Form submission logic will be implemented later
@@ -20,7 +19,10 @@ const ContactPage = () => {
         <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-8 mb-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1"
+              >
                 Name
               </label>
               <input
@@ -32,7 +34,10 @@ const ContactPage = () => {
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1"
+              >
                 Email
               </label>
               <input
@@ -44,7 +49,10 @@ const ContactPage = () => {
               />
             </div>
             <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">
+              <label
+                htmlFor="subject"
+                className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1"
+              >
                 Subject
               </label>
               <input
@@ -56,7 +64,10 @@ const ContactPage = () => {
               />
             </div>
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1"
+              >
                 Message
               </label>
               <textarea
@@ -76,21 +87,6 @@ const ContactPage = () => {
               </button>
             </div>
           </form>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="flex items-center">
-            <Mail className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-2" />
-            <span className="text-gray-700 dark:text-neutral-300">support@vin-decode.com</span>
-          </div>
-          <div className="flex items-center">
-            <Phone className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-2" />
-            <span className="text-gray-700 dark:text-neutral-300">(555) 123-4567</span>
-          </div>
-          <div className="flex items-center">
-            <MessageSquare className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-2" />
-            <span className="text-gray-700 dark:text-neutral-300">Live chat available 9am-5pm EST</span>
-          </div>
         </div>
       </div>
     </div>
