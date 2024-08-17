@@ -22,7 +22,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gradient-to-b from-gray-50 to-gray-200 dark:from-neutral-800 dark:to-neutral-900">
+    <main className="flex h-screen-bar flex-col items-center justify-center p-6 dark:bg-black">
       <div className="w-full max-w-sm bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-8">
         <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
           VIN Decoder
