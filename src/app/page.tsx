@@ -10,10 +10,10 @@ export default function Home() {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    // if (!token) {
-    //   alert("Please complete the CAPTCHA");
-    //   return;
-    // }
+    if (!token) {
+      alert("Please complete the CAPTCHA");
+      return;
+    }
     router.push(`/api/verify?vin=${(event.target as any).vin.value}?token=${token ?? ""}`);
   };
 
@@ -53,6 +53,7 @@ export default function Home() {
               }}
             />
           </div>
+          {token}
         </form>
       </div>
     </main>

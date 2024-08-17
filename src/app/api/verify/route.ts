@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.redirect(`${url.origin}/?error=No token provided`);
   }
 
-  const form = new URLSearchParams();
+  let form = new FormData();
   form.append("secret", process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY ?? "");
   form.append("response", token ?? "");
   form.append("remoteip", req.headers.get("x-forwarded-for") as string);
@@ -27,9 +27,13 @@ export async function GET(req: NextRequest) {
     { method: "POST", body: form }
   );
 
-  if (result.status !== 200) {
-    console.error("Error verifying token");
-    return NextResponse.redirect(`${url.origin}/?error=Error verifying token`);
+  const outcome = await result.json();
+
+  if (!outcome.success) {
+    console.error("CAPTCHA verification failed");
+    return NextResponse.redirect(
+      `${url.origin}/?error=CAPTCHA verification failed`
+    );
   }
 
   return NextResponse.redirect(`${url.origin}/results?vin=${vin}`);
