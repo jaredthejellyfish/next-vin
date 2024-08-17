@@ -39,10 +39,26 @@ const tables = [
   { name: "Lighting Visibility", ids: [177, 178, 179, 180, 19, 20] },
 ];
 
+async function verifyToken(token: string) {
+  const form = new FormData();
+  form.append("secret", process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY ?? "");
+  form.append("response", token);
+
+  const result = await fetch(
+    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+    { method: "POST", body: form }
+  );
+
+  const outcome = await result.json();
+
+  return outcome.success;
+}
+
 const VinLookupTable: React.FC<{ vinData: VinLookupResponse }> = ({
   vinData,
 }) => {
-  if (!vinData?.data) return <p className="text-center text-gray-500">No data available.</p>;
+  if (!vinData?.data)
+    return <p className="text-center text-gray-500">No data available.</p>;
 
   const allTableIds = tables.flatMap((table) => table.ids);
   const otherResults = vinData.data.filter(
@@ -123,9 +139,19 @@ const VinLookupTable: React.FC<{ vinData: VinLookupResponse }> = ({
   );
 };
 
-type Props = { searchParams: { vin: string } };
+type Props = { searchParams: { vin: string; token: string } };
 
-async function VinResult({ searchParams: { vin } }: Props) {
+async function VinResult({ searchParams: { vin, token } }: Props) {
+  const isValidToken = await verifyToken(token);
+
+  if (!isValidToken) {
+    return (
+      <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-neutral-900 p-10">
+        <p className="text-red-500">CAPTCHA verification failed</p>
+      </main>
+    );
+  }
+  
   const getCachedVinData = unstable_cache(
     async (vin) => getVinData(vin),
     [`vin-${vin}`]

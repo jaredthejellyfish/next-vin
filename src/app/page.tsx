@@ -14,7 +14,7 @@ export default function Home() {
       alert("Please complete the CAPTCHA");
       return;
     }
-    router.push(`/api/verify?vin=${(event.target as any).vin.value}&token=${token ?? ""}`);
+    router.push(`/results?vin=${(event.target as any).vin.value}&token=${token ?? ""}`);
   };
 
   return (
