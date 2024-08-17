@@ -12,10 +12,33 @@ import { redirect } from "next/navigation";
 
 type Props = { searchParams: { vin: string; token: string } };
 
-export async function generateMetadata({ searchParams: { vin, token } }: Props) {
+export async function generateMetadata({ searchParams: { vin } }: Props) {
+  const getCachedVinData = unstable_cache(
+    async (vin) => getVinData(vin),
+    [`vin-${vin}`]
+  );
+
+  const vehicle = await getCachedVinData(vin);
+
+  const imageUrl = getCarImage(
+    {
+      make: vehicle.make ?? "",
+      model: vehicle.model ?? "",
+      year: vehicle.year ?? "",
+    },
+    "0"
+  );
+
   return {
     title: `Vin Decoder - ${vin}`,
-  }
+    description: `Detailed information for VIN ${vin}. Learn about the ${vehicle.make} ${vehicle.model} on VIN-Decode.com.`,
+    openGraph: {
+      title: `${vehicle.make} ${vehicle.model} - VIN Decoder`,
+      description: `Detailed information for VIN ${vin}. Learn about the ${vehicle.make} ${vehicle.model} on VIN-Decode.com.`,
+      url: `https://vin-decode.com/results?vin=${vin}`,
+      images: [imageUrl && { url: imageUrl }],
+    },
+  };
 }
 
 async function VinResult({ searchParams: { vin, token } }: Props) {
@@ -42,14 +65,19 @@ async function VinResult({ searchParams: { vin, token } }: Props) {
       <>
         <Head>
           <title>Error - VIN Lookup Results</title>
-          <meta name="description" content="An error occurred while fetching VIN data." />
+          <meta
+            name="description"
+            content="An error occurred while fetching VIN data."
+          />
           <meta name="robots" content="noindex" />
         </Head>
         <div className="min-h-screen dark:bg-neutral-900 p-6 md:p-10 flex items-center justify-center">
           <Alert variant="destructive" role="alert">
             <AlertCircle className="h-4 w-4" aria-hidden="true" />
             <AlertTitle>Error</AlertTitle>
-            <AlertDescription>Error fetching VIN data. Please try again later.</AlertDescription>
+            <AlertDescription>
+              Error fetching VIN data. Please try again later.
+            </AlertDescription>
           </Alert>
         </div>
       </>
@@ -68,7 +96,10 @@ async function VinResult({ searchParams: { vin, token } }: Props) {
         <meta property="og:description" content={pageDescription} />
         {imageUrl && <meta property="og:image" content={imageUrl} />}
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href={`https://yourdomain.com/vin-results?vin=${vin}`} />
+        <link
+          rel="canonical"
+          href={`https://yourdomain.com/vin-results?vin=${vin}`}
+        />
       </Head>
       <div className="min-h-screen dark:bg-neutral-900 p-6 md:p-10">
         <div className="max-w-6xl mx-auto">
@@ -77,7 +108,10 @@ async function VinResult({ searchParams: { vin, token } }: Props) {
           </h1>
           {imageUrl && (
             <section className="mb-8" aria-labelledby="vehicle-image-heading">
-              <h2 id="vehicle-image-heading" className="text-2xl font-semibold text-gray-800 dark:text-neutral-100 mb-4">
+              <h2
+                id="vehicle-image-heading"
+                className="text-2xl font-semibold text-gray-800 dark:text-neutral-100 mb-4"
+              >
                 Vehicle Image
               </h2>
               <div className="relative h-64 md:h-96 rounded-lg overflow-hidden shadow-xl">
@@ -92,8 +126,13 @@ async function VinResult({ searchParams: { vin, token } }: Props) {
               </div>
             </section>
           )}
-          <section className="rounded-lg overflow-hidden" aria-labelledby="vehicle-details-heading">
-            <h2 id="vehicle-details-heading" className="sr-only">Vehicle Details</h2>
+          <section
+            className="rounded-lg overflow-hidden"
+            aria-labelledby="vehicle-details-heading"
+          >
+            <h2 id="vehicle-details-heading" className="sr-only">
+              Vehicle Details
+            </h2>
             <VinLookupTable vinData={data} />
           </section>
         </div>

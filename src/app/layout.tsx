@@ -9,6 +9,33 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Vin Decoder",
   description: "Decode a VIN to get vehicle information and specifications.",
+  keywords: [
+    "VIN Decoder",
+    "Vehicle Identification Number Lookup",
+    "VIN Number Check",
+    "VIN Number Lookup",
+    "Vehicle Information by VIN",
+    "Car VIN Decoder",
+    "Vehicle History Report",
+    "Free VIN Check",
+    "Decode VIN Online",
+    "VIN Lookup Service",
+    "Car Specifications by VIN",
+    "Automotive VIN Decoder",
+    "Truck VIN Decoder",
+    "Motorcycle VIN Decoder",
+    "VIN Number Search",
+    "VIN Number Details",
+    "Decode Vehicle VIN",
+    "VIN Number Explanation",
+    "VIN Decoder Tool",
+    "Vehicle Info by VIN",
+  ],
+  openGraph: {
+    title: `VIN Decoder`,
+    description: "Decode a VIN to get vehicle information and specifications.",
+    url: `https://vin-decode.com/`,
+  },
 };
 
 export default function RootLayout({

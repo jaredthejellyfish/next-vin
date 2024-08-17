@@ -60,3 +60,4 @@ export default async function getVinData(
     return error();
   }
 }
+
