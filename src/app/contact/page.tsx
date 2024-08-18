@@ -1,4 +1,4 @@
-import { contactEmailSubit } from "@/utils/actions";
+import { contactEmailSubmit } from "@/utils/actions";
 import React from "react";
 
 const ContactPage = () => {
@@ -10,7 +10,7 @@ const ContactPage = () => {
         </h1>
 
         <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-8 mb-8">
-          <form action={contactEmailSubit} className="space-y-6">
+          <form action={contactEmailSubmit} className="space-y-6">
             <div>
               <label
                 htmlFor="name"
@@ -22,6 +22,7 @@ const ContactPage = () => {
                 type="text"
                 id="name"
                 name="name"
+                placeholder="John Doe"
                 required
                 className="w-full px-3 py-2 border border-gray-300 dark:border-neutral-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-700 dark:text-neutral-100"
               />
@@ -37,6 +38,7 @@ const ContactPage = () => {
                 type="email"
                 id="email"
                 name="email"
+                placeholder="email@example.com"
                 required
                 className="w-full px-3 py-2 border border-gray-300 dark:border-neutral-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-700 dark:text-neutral-100"
               />
@@ -52,6 +54,7 @@ const ContactPage = () => {
                 type="text"
                 id="subject"
                 name="subject"
+                placeholder="Subject"
                 required
                 className="w-full px-3 py-2 border border-gray-300 dark:border-neutral-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-700 dark:text-neutral-100"
               />
@@ -66,6 +69,7 @@ const ContactPage = () => {
               <textarea
                 id="message"
                 name="message"
+                placeholder="I have a question about..."
                 rows={4}
                 required
                 className="w-full px-3 py-2 border border-gray-300 dark:border-neutral-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-700 dark:text-neutral-100"

@@ -84,13 +84,7 @@ async function VinResult({ params: { vin } }: Props) {
           VIN Lookup Results for {data.year} {data.make} {data.model}
         </h1>
         {imageUrl && (
-          <section className="mb-4" aria-labelledby="vehicle-image-heading">
-            <h2
-              id="vehicle-image-heading"
-              className="text-2xl font-semibold text-gray-800 dark:text-neutral-100 mb-4"
-            >
-              Vehicle Image
-            </h2>
+          <section aria-labelledby="vehicle-image-heading">
             <div className="relative h-64 md:h-96 rounded-lg overflow-hidden">
               <Image
                 src={imageUrl}
@@ -102,6 +96,9 @@ async function VinResult({ params: { vin } }: Props) {
             </div>
           </section>
         )}
+        <section className="text-center text-gray-600 dark:text-neutral-400 mb-3.5">
+          <p>VIN: {vin}</p>
+        </section>
         <section
           className="rounded-lg overflow-hidden"
           aria-labelledby="vehicle-details-heading"
