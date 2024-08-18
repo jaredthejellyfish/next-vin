@@ -9,10 +9,13 @@ import getVinData from "@/utils/getVinData";
 import getCarImage from "@/utils/getCarImage";
 import VinLookupTable from "@/components/vin-lookup-table";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
-type Props = { searchParams: { vin: string; token: string } };
+type Props = {
+  params: { vin: string };
+};
 
-export async function generateMetadata({ searchParams: { vin } }: Props) {
+export async function generateMetadata({ params: { vin } }: Props) {
   const getCachedVinData = unstable_cache(
     async (vin) => getVinData(vin),
     [`vin-${vin}`]
@@ -41,12 +44,18 @@ export async function generateMetadata({ searchParams: { vin } }: Props) {
   };
 }
 
-async function VinResult({ searchParams: { vin, token } }: Props) {
-  const isValidToken = await verifyToken(token);
+async function VinResult({ params: { vin } }: Props) {
+  const token = cookies().get("cf-turnstyle-token");
+
+  if (!token || !token.value) {
+    return redirect("/");
+  }
+
+  const isValidToken = await verifyToken(token.value);
   const bypassToken = process.env.NEXT_PUBLIC_BYPASS_TOKEN === "true";
 
   if (!bypassToken && !isValidToken) {
-    return redirect("/");
+    redirect("/");
   }
 
   const getCachedVinData = unstable_cache(
@@ -119,8 +128,7 @@ async function VinResult({ searchParams: { vin, token } }: Props) {
                   src={imageUrl}
                   alt={`${data.year} ${data.make} ${data.model}`}
                   layout="fill"
-                  objectFit="contain"
-                  className="transition-opacity duration-300 hover:opacity-90"
+                  className="transition-opacity duration-300 hover:opacity-90 object-contain"
                   priority
                 />
               </div>

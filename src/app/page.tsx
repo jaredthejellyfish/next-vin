@@ -32,7 +32,7 @@ export default function Home() {
       return;
     }
     router.push(
-      `/results?vin=${(event.target as any).vin.value}&token=${token ?? ""}`
+      `/api/validate-token?vin=${(event.target as any).vin.value}&token=${token ?? "978143"}`
     );
   };
 
