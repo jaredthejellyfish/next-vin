@@ -5,7 +5,7 @@ import { validate } from "vinidator";
 
 export default function Home() {
   const [vin, setVin] = useState("");
-  throw new Error("Not implemented");
+
   return (
     <main className="flex h-screen flex-col items-center justify-center p-6 dark:bg-neutral-900">
       <div className="w-full max-w-sm bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-8">
