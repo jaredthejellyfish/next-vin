@@ -23,7 +23,7 @@ const Section = ({ title, content, icon }: { title: string, content: string, ico
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen dark:bg-neutral-900 p-6 md:p-10">
+    <div className="min-h-screen dark:bg-neutral-900 p-6 md:p-10 mt-16">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-neutral-100 mb-8 text-center">
           About VIN-Decode.com

@@ -4,13 +4,14 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@vercel/analytics/react";
 import NavBar from "@/components/navigation";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Vin Decoder",
-  description: "Unlock comprehensive vehicle information and specifications by decoding any VIN. Get detailed insights your engine details, safety features, and more with our easy-to-use VIN decoder.",
+  description:
+    "Unlock comprehensive vehicle information and specifications by decoding any VIN. Get detailed insights your engine details, safety features, and more with our easy-to-use VIN decoder.",
   keywords: [
     "VIN Decoder",
     "Vehicle Identification Number Lookup",
@@ -35,11 +36,11 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: `VIN Decoder`,
-    description: "Unlock comprehensive vehicle information and specifications by decoding any VIN. Get detailed insights into your engine details, safety features, and more with our easy-to-use VIN decoder.",
+    description:
+      "Unlock comprehensive vehicle information and specifications by decoding any VIN. Get detailed insights into your engine details, safety features, and more with our easy-to-use VIN decoder.",
     url: `https://vin-decode.com/`,
   },
 };
-
 
 export default function RootLayout({
   children,

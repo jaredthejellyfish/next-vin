@@ -1,48 +1,18 @@
 "use client";
-
-import { FormEvent, useState } from "react";
-import TurnstileWidget from "@/components/turnstile";
-import { useRouter } from "next/navigation";
+import { resultsForVin } from "@/utils/actions";
+import { useState } from "react";
 import { validate } from "vinidator";
-import { useToast } from "@/components/ui/use-toast";
-import { ToastAction } from "@/components/ui/toast";
 
 export default function Home() {
-  const [token, setToken] = useState<string | null>(null);
   const [vin, setVin] = useState("");
-  const router = useRouter();
-  const { toast } = useToast();
-
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-    if (!token) {
-      toast({
-        title: "CAPTCHA verification failed",
-        description: "Please ensure you are not a robot",
-        variant: "destructive",
-        action: (
-          <ToastAction
-            altText="Try again"
-            onClick={() => window.location.reload()}
-          >
-            Try again
-          </ToastAction>
-        ),
-      });
-      return;
-    }
-    router.push(
-      `/api/validate-token?vin=${(event.target as any).vin.value}&token=${token ?? "978143"}`
-    );
-  };
 
   return (
-    <main className="flex h-screen-bar flex-col items-center justify-center p-6 dark:bg-neutral-900">
+    <main className="flex h-screen flex-col items-center justify-center p-6 dark:bg-neutral-900">
       <div className="w-full max-w-sm bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-8">
         <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
           VIN Decoder
         </h1>
-        <form onSubmit={handleSubmit} noValidate>
+        <form action={resultsForVin} noValidate>
           <div className="mb-4">
             <label
               htmlFor="vin"
@@ -62,7 +32,7 @@ export default function Home() {
                 required
                 aria-required="true"
                 aria-invalid={
-                  !token || validate(vin).isValid === false ? "true" : "false"
+                  validate(vin).isValid === false ? "true" : "false"
                 }
                 aria-describedby="vin-error"
                 pattern="^[A-HJ-NPR-Z0-9]{17}$"
@@ -77,15 +47,6 @@ export default function Home() {
                 Decode
               </button>
             </div>
-          </div>
-          <div className="mt-4">
-            <TurnstileWidget
-              sitekey={process.env.NEXT_PUBLIC_TURNSLITE_SITE_KEY!}
-              onVerify={(t) => setToken(t)}
-              onError={() => {
-                setToken(null);
-              }}
-            />
           </div>
         </form>
       </div>
