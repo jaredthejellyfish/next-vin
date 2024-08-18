@@ -1,23 +1,16 @@
-"use client";
-
-import React, { FormEvent } from "react";
+import { contactEmailSubit } from "@/utils/actions";
+import React from "react";
 
 const ContactPage = () => {
-  // Form submission logic will be implemented later
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    // Form submission logic will go here
-  };
-
   return (
-    <div className="min-h-screen dark:bg-neutral-900 p-6 md:p-10 mt-16">
+    <div className="max-h-screen dark:bg-neutral-900 p-6 md:p-10 mt-16">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-neutral-100 mb-8 text-center">
           Contact Us
         </h1>
 
         <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-8 mb-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form action={contactEmailSubit} className="space-y-6">
             <div>
               <label
                 htmlFor="name"
