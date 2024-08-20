@@ -3,7 +3,7 @@ import { AlertCircle } from "lucide-react";
 
 const ContactErrorPage = () => {
   return (
-    <div className="max-h-screen dark:bg-neutral-900 p-6 md:p-10 mt-16">
+    <div className="dark:bg-neutral-900 p-6 md:p-10 mt-16">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-neutral-100 mb-8 text-center">
           Message Submission Error
