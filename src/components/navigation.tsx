@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { Menu, X, Car } from "lucide-react";
+import { Menu, X, Car, Sun, Moon } from "lucide-react";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 
 const NavLink = ({
   href,
@@ -37,6 +38,27 @@ const MobileNavLink = ({
   </Link>
 );
 
+const ThemeToggle = () => {
+  const { setTheme, theme } = useTheme();
+
+  const toggleTheme = () => {
+    const isDark = theme === "dark";
+    setTheme(isDark ? "light" : "dark");
+  };
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className="w-8 h-8 rounded-full bg-gray-200 dark:bg-neutral-700 text-gray-700 dark:text-neutral-200 hover:bg-gray-300 dark:hover:bg-neutral-600 transition duration-300 relative"
+      aria-label="Toggle theme"
+    >
+      <Sun className="absolute h-[1.2rem] w-[1.2rem] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <Moon className="absolute h-[1.2rem] w-[1.2rem] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+    </button>
+  );
+};
+
+
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -65,23 +87,27 @@ const NavBar = () => {
                 VIN-Decode
               </span>
             </Link>
-            <div className="hidden md:flex items-center space-x-1">
+            <div className="hidden md:flex items-center space-x-4">
+              <ThemeToggle />
               <NavLink href="/">Home</NavLink>
               <NavLink href="/about">About</NavLink>
               <NavLink href="/services">Services</NavLink>
               <NavLink href="/contact">Contact</NavLink>
             </div>
-            <button
-              onClick={toggleMenu}
-              className="md:hidden"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? (
-                <X className="h-6 w-6 text-gray-700 dark:text-neutral-200" />
-              ) : (
-                <Menu className="h-6 w-6 text-gray-700 dark:text-neutral-200" />
-              )}
-            </button>
+            <div className="md:hidden flex items-center space-x-4">
+              <ThemeToggle />
+              <button
+                onClick={toggleMenu}
+                className="p-2"
+                aria-label="Toggle menu"
+              >
+                {isOpen ? (
+                  <X className="h-6 w-6 text-gray-700 dark:text-neutral-200" />
+                ) : (
+                  <Menu className="h-6 w-6 text-gray-700 dark:text-neutral-200" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
         {isOpen && (
