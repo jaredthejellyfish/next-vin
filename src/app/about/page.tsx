@@ -2,6 +2,7 @@ import React from "react";
 import { AlertCircle, Car, Wrench, Users, Mail } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Image from "next/image";
+import Link from "next/link";
 
 const IconWrapper = ({ children }: { children: React.ReactNode }) => (
   <div className="text-blue-600 dark:text-blue-400 mr-2">{children}</div>
@@ -74,7 +75,7 @@ const AboutPage = () => {
             <AlertTitle>Get in Touch</AlertTitle>
             <AlertDescription>
               Have questions or feedback? We&apos;d love to hear from you!
-              Contact us at support@vin-decode.com or call us at (555) 123-4567.
+              Head to our <Link href="/contact" className="text-blue-600 dark:text-blue-400">contact</Link> page to get in touch.
             </AlertDescription>
           </Alert>
         </section>
