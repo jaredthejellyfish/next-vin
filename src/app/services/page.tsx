@@ -64,24 +64,16 @@ const ServicesPage = () => {
         <Section
           title="Our Services"
           icon={<Search size={24} />}
-          content="At VIN-Decode.com, we specialize in decoding VINs to provide you with comprehensive information about vehicles. Our services include:"
+          content="At vin-decode.com, we specialize in decoding VINs to provide you with comprehensive information about vehicles. Our services include:"
         />
         <ul className="list-disc list-inside text-gray-700 dark:text-neutral-300 mb-8 ml-6">
           <li>
-            Instant VIN Decoding: Get detailed information about any vehicle in
-            seconds.
+            <b>Instant VIN Decoding:</b> Get detailed information about any
+            vehicle in seconds.
           </li>
           <li>
-            Vehicle History Reports: Learn about a vehicle&apos;s past, including
-            accidents and ownership history.
-          </li>
-          <li>
-            Market Value Estimation: Understand the current market value of a
-            vehicle based on its VIN.
-          </li>
-          <li>
-            Recall Information: Stay informed about any recalls or safety issues
-            related to a specific vehicle.
+            <b>Recall Information:</b> Stay informed about any recalls or safety
+            issues related to a specific vehicle.
           </li>
         </ul>
 

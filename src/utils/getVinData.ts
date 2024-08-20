@@ -1,10 +1,11 @@
-import { VehicleResponse, VinLookupResponse } from "@/types";
+import { VehicleResponse, VinLookupResponse, RecallData } from "@/types";
 import nhtsa from "@joshmakar/nhtsa";
 
 const error = () => {
   return {
     error: true,
     data: null,
+    recalls: [],
     make: null,
     model: null,
     year: null,
@@ -48,9 +49,17 @@ export default async function getVinData(
       (item) => item.Variable === "Model Year"
     )?.Value;
 
+    const recalls = await fetch(
+      `https://api.nhtsa.gov/recalls/recallsByVehicle?make=${make}&model=${model}&modelYear=${year}`
+    );
+
+    const recallJSON = (await recalls.json()) as RecallData;
+    const recallData = recallJSON.results ? recallJSON.results : [];
+
     return {
       error: false,
       data: [...filteredResults],
+      recalls: recallData,
       make: make || null,
       model: model || null,
       year: year || null,
@@ -60,4 +69,3 @@ export default async function getVinData(
     return error();
   }
 }
-

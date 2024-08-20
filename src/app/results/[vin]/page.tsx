@@ -6,6 +6,7 @@ import { unstable_cache } from "next/cache";
 import getVinData from "@/utils/getVinData";
 import getCarImage from "@/utils/getCarImage";
 import VinLookupTable from "@/components/vin-lookup-table";
+import VehicleRecalls from "@/components/vehicle-recalls";
 
 type Props = {
   params: { vin: string };
@@ -41,10 +42,10 @@ export async function generateMetadata({ params: { vin } }: Props) {
 
   return {
     title: `Vin Decoder - ${vin}`,
-    description: `Detailed information for VIN ${vin}. Learn about the ${vehicle.make} ${vehicle.model} on VIN-Decode.com.`,
+    description: `Detailed information for VIN ${vin}. Learn about the ${vehicle.make} ${vehicle.model} on vin-decode.com.`,
     openGraph: {
       title: `${vehicle.make} ${vehicle.model} - VIN Decoder`,
-      description: `Detailed information for VIN ${vin}. Learn about the ${vehicle.make} ${vehicle.model} on VIN-Decode.com.`,
+      description: `Detailed information for VIN ${vin}. Learn about the ${vehicle.make} ${vehicle.model} on vin-decode.com.`,
       url: `https://vin-decode.com/results/${vin}`,
       images: [imageUrl],
     },
@@ -100,7 +101,7 @@ async function VinResult({ params: { vin } }: Props) {
           <p>VIN: {vin}</p>
         </section>
         <section
-          className="rounded-lg overflow-hidden"
+          className="rounded-lg overflow-hidden mb-10"
           aria-labelledby="vehicle-details-heading"
         >
           <h2 id="vehicle-details-heading" className="sr-only">
@@ -108,6 +109,7 @@ async function VinResult({ params: { vin } }: Props) {
           </h2>
           <VinLookupTable vinData={data} />
         </section>
+        <VehicleRecalls recalls={data.recalls} />
       </div>
     </div>
   );

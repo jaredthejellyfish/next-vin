@@ -1,6 +1,6 @@
 # vin-decode.com
 
-Welcome to the official GitHub repository for [VIN-Decode.com](https://vin-decode.com), a powerful and user-friendly platform for decoding Vehicle Identification Numbers (VINs). Our service provides detailed information about vehicles based on their VIN, including manufacturer details, physical characteristics, engine specs, safety features, and more.
+Welcome to the official GitHub repository for [vin-decode.com](https://vin-decode.com), a powerful and user-friendly platform for decoding Vehicle Identification Numbers (VINs). Our service provides detailed information about vehicles based on their VIN, including manufacturer details, physical characteristics, engine specs, safety features, and more.
 
 ## Table of Contents
 
@@ -82,7 +82,7 @@ Welcome to the official GitHub repository for [VIN-Decode.com](https://vin-decod
 
 ## Contributing
 
-We welcome contributions to improve VIN-Decode.com! Here's how you can contribute:
+We welcome contributions to improve vin-decode.com! Here's how you can contribute:
 
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature-branch`).
