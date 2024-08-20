@@ -4,17 +4,24 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Menu, X, Car, Sun, Moon } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const NavLink = ({
   href,
   children,
+  current,
 }: {
   href: string;
   children: React.ReactNode;
+  current?: boolean;
 }) => (
   <Link
     href={href}
-    className="py-2 px-3 text-gray-700 dark:text-neutral-200 hover:bg-gray-100 dark:hover:bg-neutral-700 rounded transition duration-300"
+    className={cn(
+      "py-2 px-3 text-gray-700 dark:text-neutral-200 hover:bg-gray-100 dark:hover:bg-neutral-700 rounded transition duration-300",
+      current && "text-blue-600 dark:text-blue-400"
+    )}
   >
     {children}
   </Link>
@@ -24,14 +31,19 @@ const MobileNavLink = ({
   href,
   children,
   onClick,
+  current,
 }: {
   href: string;
   children: React.ReactNode;
+  current?: boolean;
   onClick: () => void;
 }) => (
   <Link
     href={href}
-    className="block py-2 px-4 text-sm text-gray-700 dark:text-neutral-200 hover:bg-gray-100 dark:hover:bg-neutral-700"
+    className={cn(
+      "block py-2 px-4 text-sm text-gray-700 dark:text-neutral-200 hover:bg-gray-100 dark:hover:bg-neutral-700",
+      current && "text-blue-600 dark:text-blue-400"
+    )}
     onClick={onClick}
   >
     {children}
@@ -58,9 +70,16 @@ const ThemeToggle = () => {
   );
 };
 
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
+  { href: "/contact", label: "Contact" },
+];
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   const toggleMenu = useCallback(() => setIsOpen((prev) => !prev), []);
 
@@ -89,10 +108,11 @@ const NavBar = () => {
             </Link>
             <div className="hidden md:flex items-center space-x-4">
               <ThemeToggle />
-              <NavLink href="/">Home</NavLink>
-              <NavLink href="/about">About</NavLink>
-              <NavLink href="/services">Services</NavLink>
-              <NavLink href="/contact">Contact</NavLink>
+              {links.map(({ href, label }) => (
+                <NavLink key={href} href={href} current={pathname === href}>
+                  {label}
+                </NavLink>
+              ))}
             </div>
             <div className="md:hidden flex items-center space-x-4">
               <ThemeToggle />
@@ -112,18 +132,16 @@ const NavBar = () => {
         </div>
         {isOpen && (
           <div className="md:hidden font-bold">
-            <MobileNavLink href="/" onClick={toggleMenu}>
-              Home
-            </MobileNavLink>
-            <MobileNavLink href="/about" onClick={toggleMenu}>
-              About
-            </MobileNavLink>
-            <MobileNavLink href="/services" onClick={toggleMenu}>
-              Services
-            </MobileNavLink>
-            <MobileNavLink href="/contact" onClick={toggleMenu}>
-              Contact
-            </MobileNavLink>
+            {links.map(({ href, label }) => (
+              <MobileNavLink
+                key={href}
+                href={href}
+                onClick={toggleMenu}
+                current={pathname === href}
+              >
+                {label}
+              </MobileNavLink>
+            ))}
           </div>
         )}
       </nav>
